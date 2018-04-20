@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/sandali95/node-RESTful-api#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "morgan": "^1.9.0"
   }

@@ -1,7 +1,7 @@
 const express = require('express');
-
 const morgan = require('morgan');
-
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 
@@ -10,6 +10,11 @@ const app = express();
 
 //logger middleware function
 app.use(morgan('dev'));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
+
+app.use(cors);
 
 //Routes to handle requests
 app.use('/products',productRoutes);

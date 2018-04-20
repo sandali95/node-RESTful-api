@@ -9,8 +9,13 @@ router.get('/' , (req,res,next)=>{
 });
 
 router.post('/' , (req,res,next)=>{
+    let product = {
+        name : req.body.name,
+        price : req.body.price
+    }
     res.status(201).json({
-        msg:"POSt/ reqiests to act-items"
+        msg:"created a product",
+        product : product
     });
 });
 

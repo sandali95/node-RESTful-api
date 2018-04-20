@@ -9,8 +9,13 @@ router.get('/' , (req,res,next)=>{
 });
 
 router.post('/' , (req,res,next)=>{
+    let order = {
+        id : req.body.productId ,
+        quantity : req.body.quantity
+    }
     res.status(201).json({
-        msg:"POSt/ reqiests to orders"
+        msg:"POSt/ reqiests to orders",
+        order : order
     });
 });
 
