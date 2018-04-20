@@ -1,0 +1,22 @@
+{
+  "name": "node-rest",
+  "version": "1.0.0",
+  "description": "simple restful api with node.js",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sandali95/node-RESTful-api.git"
+  },
+  "author": "Sandali S.W",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sandali95/node-RESTful-api/issues"
+  },
+  "homepage": "https://github.com/sandali95/node-RESTful-api#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
