@@ -2,11 +2,25 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const mongoose = require('mongoose');
+
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
-
+const config = require('./api/config/database');
 
 const app = express();
+
+//Database connection
+mongoose.connect(config.database);
+
+//On Connection
+mongoose.connection.on('connected',function(){
+  console.log('Connected to database : '+config.database);
+});
+mongoose.connection.on('error',function(err){
+  console.log('Database Error : '+err);
+});
+
 
 //logger middleware function
 app.use(morgan('dev'));
