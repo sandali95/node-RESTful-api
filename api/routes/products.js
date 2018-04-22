@@ -1,49 +1,75 @@
 const express = require('express');
+const Product = require('../models/product');
 
 const router = express.Router();
 
 router.get('/' , (req,res,next)=>{
-    res.status(200).json({
-        msg:"GET/ reqiests to act-items"
+    Product.getAllProducts((err,data)=>{
+        if (err) throw err;
+        res.json(data);
     });
+    
 });
 
 router.post('/' , (req,res,next)=>{
-    let product = {
+    let newProduct = {
         name : req.body.name,
         price : req.body.price
     }
-    res.status(201).json({
-        msg:"created a product",
-        product : product
+
+    Product.addProduct(newProduct,(err,data)=>{
+        if(err){
+            res.status(201).json({
+                success : false,
+                msg : err,
+                product : newProduct
+            });
+          }else{
+            res.status(201).json({
+                success : true,
+                msg : "created a product",
+                product : data
+            });
+          }
     });
 });
 
 router.get('/:productId' , (req,res,next)=>{
-    let id = req.params.itemId;
+    let id = req.params.productId;
 
-    if(id === 'special'){
-        res.status(200).json({
-            msg:"special id"
-        });
-    }else{
-        res.status(200).json({
-            msg:"not-special"
-        });
-    }
-    
+    Product.findProduct(id,(err,data)=>{
+        if(err) throw err ;
+        res.json(data);
+    });
 });
 
 router.patch('/:productId' , (req,res,next)=>{
-    res.status(200).json({
-        msg:"/UPDATE"
-    });
-    
+    let id = req.params.productId
+
+    let updateops ={};
+    for(let ops of req.body){
+        updateops[ops.propName] = ops.value;
+    };
+
+    Product.updateProduct(id,updateops,(err ,data)=>{
+        if(err) throw err ;
+        res.json({
+            success : true ,
+            msg: "Successfully updated Product",
+            data : data
+        });
+    });    
 });
 
 router.delete('/:productId' , (req,res,next)=>{
-    res.status(200).json({
-        msg:"/DELETE"
+    let id = req.params.productId ;
+    
+    Product.deleteProduct(id,(err,data)=>{
+        if(err) throw err ;
+        res.json({
+            success : true ,
+            msg: "Successfully Removed Product"
+        });
     });
     
 });
