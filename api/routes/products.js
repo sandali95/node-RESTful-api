@@ -1,8 +1,34 @@
 const express = require('express');
 const Product = require('../models/product');
+const multer = require('multer');
 
 const router = express.Router();
 
+//store images
+const storage = multer.diskStorage({
+    destination : function(req,file,cb){
+      cb(null , './uploads/');
+    } ,
+  
+    filename : function(req,file,cb){
+      cb(null ,Date.now()+file.originalname);
+    }
+  
+  });
+  
+  //reject other files
+  const fileFilter = (req,file,cb) => {
+    if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
+      cb(null,true);
+    }else{
+      cb(new Error('Not relevant file type'),false);
+    }
+  }
+  
+const upload = multer({storage:storage , fileFilter:fileFilter}) ;
+
+
+//Product Routes
 router.get('/' , (req,res,next)=>{
     Product.getAllProducts((err,data)=>{
         if (err) throw err;
@@ -14,7 +40,8 @@ router.get('/' , (req,res,next)=>{
 router.post('/' , (req,res,next)=>{
     let newProduct = {
         name : req.body.name,
-        price : req.body.price
+        price : req.body.price.name,
+        itemImage : req.file.path
     }
 
     Product.addProduct(newProduct,(err,data)=>{

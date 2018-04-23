@@ -21,6 +21,8 @@ mongoose.connection.on('error',function(err){
   console.log('Database Error : '+err);
 });
 
+//static front end files
+app.use('/uploads',express.static('./uploads'));
 
 //logger middleware function
 app.use(morgan('dev'));
