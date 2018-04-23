@@ -32,7 +32,7 @@ const upload = multer({storage:storage , fileFilter:fileFilter}) ;
 router.get('/' , (req,res,next)=>{
     Product.getAllProducts((err,data)=>{
         if (err) throw err;
-        res.json(data);
+        res.status(200).json(data);
     });
     
 });
@@ -46,7 +46,7 @@ router.post('/' , (req,res,next)=>{
 
     Product.addProduct(newProduct,(err,data)=>{
         if(err){
-            res.status(201).json({
+            res.status(500).json({
                 success : false,
                 msg : err,
                 product : newProduct
@@ -66,7 +66,7 @@ router.get('/:productId' , (req,res,next)=>{
 
     Product.findProduct(id,(err,data)=>{
         if(err) throw err ;
-        res.json(data);
+        res.status(200).json(data);
     });
 });
 
@@ -80,7 +80,7 @@ router.patch('/:productId' , (req,res,next)=>{
 
     Product.updateProduct(id,updateops,(err ,data)=>{
         if(err) throw err ;
-        res.json({
+        res.status(201).json({
             success : true ,
             msg: "Successfully updated Product",
             data : data
@@ -93,7 +93,7 @@ router.delete('/:productId' , (req,res,next)=>{
     
     Product.deleteProduct(id,(err,data)=>{
         if(err) throw err ;
-        res.json({
+        res.status(200).json({
             success : true ,
             msg: "Successfully Removed Product"
         });

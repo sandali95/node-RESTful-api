@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/' , (req,res)=>{
     Order.getAllOrders( (err ,result)=>{
         if(err) throw err ;
-        res.json({result});
+        res.status(200).json({result});
     });
 });
 
@@ -17,7 +17,7 @@ router.post('/' , (req,res)=>{
     } ;
     Order.addOrder(neworder , (err , result)=>{
         if(err){
-            res.status(201).json({
+            res.status(500).json({
                 success : false,
                 msg : err,
                 product : neworder
@@ -33,11 +33,11 @@ router.post('/' , (req,res)=>{
     
 });
 
-router.post('/:orderId' , (req,res,next)=>{
+router.get('/:orderId' , (req,res,next)=>{
     let id = req.params.orderId ;
     Order.getOrderById(id , (err,result)=>{
         if(err) throw err ;
-        res.json(result);
+        res.status(200).json(result);
     });
 });
 
