@@ -8,7 +8,7 @@ const router = express.Router();
 router.post('.signup',(req,res)=>{
     
     User.findEmail(req,body.email,(err,data)=>{
-        if(data){
+        if(data.length >=1){
             return res.status(402).json({
                 message : "Email address is already in use"
             });
