@@ -1,5 +1,6 @@
 const express = require('express');
 const Order = require('../models/order');
+const checkAuth = require('../middleware/checkAuth');
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ router.get('/' , (req,res)=>{
     });
 });
 
-router.post('/' , (req,res)=>{
+router.post('/' ,checkAuth, (req,res)=>{
     let neworder = {
         product : req.body.productId ,
         quantity : req.body.quantity
@@ -33,7 +34,7 @@ router.post('/' , (req,res)=>{
     
 });
 
-router.get('/:orderId' , (req,res,next)=>{
+router.get('/:orderId' , checkAuth, (req,res,next)=>{
     let id = req.params.orderId ;
     Order.getOrderById(id , (err,result)=>{
         if(err) throw err ;
@@ -41,7 +42,7 @@ router.get('/:orderId' , (req,res,next)=>{
     });
 });
 
-router.post('/:productId' , (req,res,next)=>{
+router.post('/:productId' , checkAuth,(req,res,next)=>{
     res.status(201).json({
         msg:"post to orders"
     });

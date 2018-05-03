@@ -1,6 +1,7 @@
 const express = require('express');
 const Product = require('../models/product');
 const multer = require('multer');
+const checkAuth = require('../middleware/checkAuth');
 
 const router = express.Router();
 
@@ -37,10 +38,10 @@ router.get('/' , (req,res,next)=>{
     
 });
 
-router.post('/' , (req,res,next)=>{
+router.post('/' ,checkAuth,upload.single('productImage'), (req,res,next)=>{
     let newProduct = {
         name : req.body.name,
-        price : req.body.price.name,
+        price : req.body.price,
         itemImage : req.file.path
     }
 

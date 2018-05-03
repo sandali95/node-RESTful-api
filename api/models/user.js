@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema({
     password : {type:String , required:true}
 });
 
-const User = module.exports = mongoose.model('User',userrSchema);
+const User = module.exports = mongoose.model('User',userSchema);
 
 module.exports.addUser = function(newUser , callback){
     newUser.save(callback);
